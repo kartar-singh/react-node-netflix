@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Authentication with Auth0</title>
+    <style>
+        .bbb{
+            margin-right: 10px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Admin Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">About <span class="sr-only">(current)</span></a>
+            </li>
+            <% if(!isAuthenticated) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <% } else { %>
+             <li class="nav-item">
+              <!-- <a class="nav-link" href="/logout">Logout</a> -->
+            </li>
+          
+            <li class="nav-item dropdown mr-sm-2">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                User
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="list-group">
+                  
+                    <li class="list-group-item ">
+                      <% if(user) { %>
+                        <%= user.name %>
+                        <% } %>
+                      </li>
+                      <li class="list-group-item ">
+                        <a class="" href="/logout">Logout</a>
+                          
+                        </li>
+                  
+                    </ul>
+                    <% } %>
+            </li>
+            
+          </ul>
+
+          <div class="btn-group bbb" >
+           
+           
+          </div>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+    
+
+  <% if(!isAuthenticated) { %>
+    <div class="row d-flex justify-content-center align-items-center flex-nowrap" style="min-height: 100vh;">
+        <h2>You are not Logged In</h2>
+    </div>
+    <% } else { %>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">home</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/list">list</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/addlist">Add new list</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/category">category</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link "  href="/addnewcategory">add new category</a>
+            </li>
+          </ul>
+
+    </div>
+<% } %> 
+<!-- Example split danger button -->
+<h2>netflix category</h2>
+<table class="table">
+    <thead class="thead-dark">
+  
+      <tr>
+        <th scope="col">S.no</th>
+        <th scope="col">Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% ScreenShowsData=JSON.parse(myData) %>
+      <% for(var i=0;  i < ScreenShowsData.length; i++) { %>
+
+      <tr>
+        <th scope="row"><%= i %></th>
+        <td><%= ScreenShowsData[i].category %></td>
+        
+      </tr>
+      <% } %>
+     
+    </tbody>
+  </table>
+
+
+
+
+   
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  </body>
+</html>
