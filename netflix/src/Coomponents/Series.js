@@ -28,6 +28,7 @@ function Series() {
             let currentPage = localStorage.setItem("page_no",data.selected) ;
             let currentPage1 = localStorage.getItem("page_no");
             console.log('::::paginate=>',currentPage1);
+            console.log("test",data.selected)
             const commentsFormServer = await fetchData(currentPage1);
       
           }

@@ -164,6 +164,20 @@ app.get('/list', async (req, res) => {
       res.status(400).json({message:error.message})
   }
 })
+
+app.get('/delete', async (req, res) => {
+  try{
+    const data = await Register.find({});
+    res.render("delete",{myData:JSON.stringify(data),
+      isAuthenticated: req.oidc.isAuthenticated(),
+      user: req.oidc.user})
+   
+    console.log(data);
+  }
+  catch(error){
+      res.status(400).json({message:error.message})
+  }
+})
 app.get('/reactlist', async (req, res) => {
   try{
       const data = await Register.find()
@@ -320,10 +334,16 @@ app.get("/search/:key", async (req,res) => {
 app.get('/cata', async (req,res) => {   
   try {   
     const type = req.query.type;
+    const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 0;
+      const page = req.query.page ? parseInt(req.query.page) : 0;
     console.log("kkkk",type)
-      const data = await Category.findOne({category:type}).populate('register')
-      console.log("xxxxxxxxxxxxx",data)
-      res.json(data)
+      const data = await Register.find({category:type}).limit(pageSize).skip(pageSize * page);
+      // const data = await Category.findOne({category:type}).populate('register')
+      const count = await Register.countDocuments({category:type})
+      
+      console.log("xxxxxxxxxxxxxdata",data)
+      console.log("coooooouuuunnnnttt",count)
+      res.json({"data":data,"count":count})
   } catch (error) {
       res.status(400).json({message: error.message})
       }
@@ -342,7 +362,19 @@ app.get('/categ', async (req,res) => {
 app.get('*',(req,res) =>{
   res.render('notfound',{isAuthenticated: req.oidc.isAuthenticated(),user: req.oidc.user})
 })
+ 
 
+app.get('/delete/:id', async (req,res) => {   
+  // try {   
+    const id = req.params.id;
+    console.log('00000000000000000000000000')
+    console.log(id)
+    console.log("id::::",id)
+    await Register.findOneAndDelete({_id: id});
+    res.render('list')
+     
+    })
+ 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`)
 })
